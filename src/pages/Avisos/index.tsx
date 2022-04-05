@@ -4,7 +4,7 @@ import { Theme } from "../../components/SideBarTheme"
 export const Avisos = () => {
     return (
         <Theme>
-          <Form namePage="Avisos" nameButton="Novo aviso" />
+          <Form namePage="Aviso" nameButton="Novo aviso" />
         </Theme>
     )
 }

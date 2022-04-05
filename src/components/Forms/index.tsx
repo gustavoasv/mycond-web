@@ -1,45 +1,116 @@
 import { useState } from "react";
-import { Buttons } from "../ButtonsForm";
-import Modal from 'react-modal'
+import Modal from "react-modal";
 import * as C from "./style";
-import ReactModal from "react-modal";
 
 interface PageType {
   namePage: string;
-  nameButton?: string | undefined
+  nameButton?: string;
 }
 
+export const StyleModal = {
+  content: {
+    position: "absolute",
+    top: "40px",
+    left: "40px",
+    width: "500px",
+    margin: "0 auto",
+    right: "40px",
+    bottom: "40px",
+    border: "1px solid #ccc",
+    background: "#fff",
+  },
+  overlay: {
+    backgroundColor: "#f5f5f54e",
+  },
+};
+Modal.setAppElement("#root");
 export const Form = (Props: PageType) => {
-  const customStyle = {
-      overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.75)'
-      }
-  }
-  const [modalsOpen, setIsOpen] = useState<boolean>(false)
+  const [modalsOpen, setIsOpen] = useState<boolean>(false);
+  const [TypeOfModal, setTypeOfModal] = useState<string>("");
 
-  const handleOpenModal = () => {
-    setIsOpen(true)
-  }
+  const handleOpenTypeModal = () => {
+    setTypeOfModal(`Editar ${Props.namePage}`);
+    setIsOpen(true);
+  };
 
   const handleCloseModal = () => {
-    setIsOpen(false)
-  }
+    setTypeOfModal("");
+    setIsOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setTypeOfModal(`Novo ${Props.namePage}`);
+    setIsOpen(true);
+  };
+
+  const handleOpeTypeDelnModal = () => {
+    setTypeOfModal(`Deletar ${Props.namePage}`);
+    setIsOpen(true);
+  };
 
   return (
     <C.MainForm>
       <div>
-        <h1>Mural de {Props.namePage}</h1>
+        <h2>{`MURAL DE ${Props.namePage.toLocaleUpperCase()}`}</h2>
+        <button onClick={handleOpenModal} className="buttomModal">
+          {Props.nameButton}
+        </button>
         <hr></hr>
-        <button onClick={handleOpenModal}>{Props.nameButton}</button>
-        <Modal isOpen={modalsOpen}>
-          <h1>Mural de {Props.namePage}</h1>
+        <Modal
+          isOpen={modalsOpen}
+          style={{
+            content: {
+              position: "absolute",
+              top: "40px",
+              left: "40px",
+              height: '300px',
+              width: "500px",
+              display: 'flex',
+              flexDirection: 'column',
+              margin: "0 auto",
+              right: "40px",
+              bottom: "40px",
+              border: "1px solid #ccc",
+              background: "#fff",
+            },
+            overlay: {
+              backgroundColor: "#f5f5f54e",
+            },
+          }}
+        >
+          {TypeOfModal && <h1>{TypeOfModal}</h1>}
+          <label>Titulo do aviso</label>
+          <C.InputModal placeholder="Digite um titulo"></C.InputModal>
+          <label>Corpo do aviso</label>
+          <input type="text" />
           <button onClick={handleCloseModal}>Fechar modal</button>
         </Modal>
+        <C.TableMain>
+          <thead>
+            <tr>
+              <C.TableHead>Titulo</C.TableHead>
+              <C.TableHead>Data de Criação</C.TableHead>
+              <C.TableHead>Ações</C.TableHead>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <C.TableBody>Titulo de teste</C.TableBody>
+              <C.TableBody>05/03/2022</C.TableBody>
+              <C.TableBody>
+                <button onClick={handleOpenTypeModal} className="excluirButton">
+                  Excluir
+                </button>
+                <button onClick={handleOpeTypeDelnModal} className="editButton">
+                  Editar
+                </button>
+              </C.TableBody>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+          </tbody>
+        </C.TableMain>
       </div>
     </C.MainForm>
   );
