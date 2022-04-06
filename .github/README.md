@@ -11,6 +11,7 @@ Aplicação desenvolvida em React para admistrar condomínio.
 - ReactJs
 - TypeScript
 - Styled-components
+- react-router-dom
 - Axios 
 - React-modal
 - React-icons
